@@ -1,0 +1,607 @@
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #cccccc;
+  --brand: #160f24;
+  --ink: #ffffff;
+  --border: #333333;
+  --shadow: 0 10px 30px rgba(22, 15, 36, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  /* Solid black for proper blend mode */
+  color: var(--text);
+  font-family: Rubik, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 0;
+  /* Establish baseline stacking context */
+}
+
+.container {
+  width: min(1000px, 92%);
+  margin: 0 auto;
+}
+
+/* Particle wave background */
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  background: #000;
+}
+
+.particle-waves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 100%;
+}
+
+.wave-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 130px 80px, #ffffff, transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 200px 60px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 240px 90px, #ffffff, transparent),
+    radial-gradient(1px 1px at 280px 20px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 320px 50px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 360px 80px, #ffffff, transparent);
+  background-repeat: repeat;
+  background-size: 400px 120px;
+  animation: waveFlow 15s linear infinite;
+  opacity: 0.8;
+}
+
+.wave-layer-1 {
+  animation-duration: 20s;
+  opacity: 0.7;
+  background-size: 500px 150px;
+}
+
+.wave-layer-2 {
+  animation-duration: 25s;
+  opacity: 0.6;
+  background-size: 450px 130px;
+  animation-delay: -5s;
+}
+
+.wave-layer-3 {
+  animation-duration: 30s;
+  opacity: 0.9;
+  background-size: 380px 110px;
+  animation-delay: -10s;
+}
+
+/* hero */
+.hero {
+  text-align: center;
+  padding: 20px 0 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-logo {
+  height: 200px;
+  width: auto;
+  margin: 30px auto 50px auto;
+  display: block;
+  animation: fadeInFromTop 1s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.hero h1 {
+  font-size: 36px;
+  line-height: 1.1;
+  margin: 0 20px;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.mobile-break {
+  display: none;
+}
+
+.headline-cursor {
+  color: var(--brand);
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(22, 15, 36, 0.8);
+}
+
+/* counter */
+.counter-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 60px;
+  position: relative;
+  z-index: 10;
+}
+
+.counter {
+  font-weight: 800;
+  font-size: 80px;
+  letter-spacing: 0.5px;
+  color: var(--ink);
+  animation: fadeInFromTop 1s ease-out 3s forwards;
+  opacity: 0;
+  position: relative;
+}
+
+/* stage (video placeholder) */
+.stage {
+  padding: 60px 0 80px;
+  position: relative;
+  z-index: 10;
+}
+
+.stage-inner {
+  position: relative;
+  border-radius: 18px;
+  background: #000;
+  border: 2px solid rgba(103, 62, 209, 0.35);
+  aspect-ratio: 16/9;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  animation: fadeInFromTop 1s ease-out 4s forwards;
+  opacity: 0;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.replay-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(22, 15, 36, 0.9);
+  border: none;
+  border-radius: 12px;
+  padding: 20px 30px;
+  color: #fff;
+  font-family: Rubik, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(22, 15, 36, 0.4);
+}
+
+.replay-btn:hover {
+  background: rgba(22, 15, 36, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(22, 15, 36, 0.6);
+}
+
+.replay-btn svg {
+  margin-left: 4px;
+}
+
+/* waitlist */
+.checkout {
+  padding: 40px 0 120px;
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.waitlist-form {
+  animation: fadeInFromTop 1s ease-out 5s forwards;
+  opacity: 0;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 50px;
+  padding: 12px;
+  max-width: 1800px;
+  margin: 0 auto;
+  gap: 15px;
+}
+
+.email-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #888;
+  font-size: 24px;
+  padding: 16px 28px;
+  font-family: Rubik, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.email-input::placeholder {
+  color: #666;
+}
+
+.email-input:focus {
+  color: #fff;
+}
+
+.join-btn {
+  background: #673ED1;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 16px 40px;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: Rubik, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.join-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 15, 36, 0.4);
+}
+
+.thank-you-message {
+  text-align: center;
+  animation: fadeInFromTop 1s ease-out forwards;
+}
+
+.thank-you-message p {
+  font-family: Rubik, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 24px;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 400;
+}
+
+@keyframes purpleGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 0 20px rgba(22, 15, 36, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 0 40px rgba(22, 15, 36, 0.8);
+  }
+}
+
+/* footer */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 26px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* animations */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInLetter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Wave animation keyframes */
+/* Sine wave flow animations - left to right */
+/* Particle wave flow animation - left to right */
+@keyframes waveFlow {
+  0% {
+    transform: translateX(-66.66%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* ripple effect */
+.ripple-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(22, 15, 36, 0.03) 0%, rgba(22, 15, 36, 0.01) 50%, transparent 70%);
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+.ripple-1 {
+  width: 300px;
+  height: 300px;
+  top: 20%;
+  left: 10%;
+  animation: rippleEffect 8s infinite;
+}
+
+.ripple-2 {
+  width: 500px;
+  height: 500px;
+  top: 60%;
+  right: 15%;
+  animation: rippleEffect 12s infinite 2s;
+}
+
+.ripple-3 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  right: 20%;
+  animation: rippleEffect 6s infinite 4s;
+}
+
+.ripple-4 {
+  width: 400px;
+  height: 400px;
+  bottom: 20%;
+  left: 20%;
+  animation: rippleEffect 10s infinite 1s;
+}
+
+.ripple-5 {
+  width: 250px;
+  height: 250px;
+  top: 40%;
+  left: 50%;
+  animation: rippleEffect 7s infinite 3s;
+}
+
+@keyframes rippleEffect {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes circlingGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(22, 15, 36, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(22, 15, 36, 1), 0 0 60px rgba(22, 15, 36, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 10px rgba(22, 15, 36, 0.5);
+  }
+}
+
+@keyframes whiteFade {
+
+  0%,
+  100% {
+    color: var(--ink);
+  }
+
+  50% {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+@keyframes letterGlow {
+
+  0%,
+  100% {
+    text-shadow: none;
+    color: var(--ink);
+  }
+
+  50% {
+    text-shadow: 0 0 8px rgba(103, 62, 209, 0.8), 0 0 16px rgba(103, 62, 209, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+
+  /* Hero section */
+  .hero {
+    padding: 32px 0 48px;
+  }
+
+  .hero-logo {
+    height: 96px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: 18px;
+    margin: 0 8px;
+    line-height: 1.4;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .mobile-break {
+    display: none;
+  }
+
+  /* Counter */
+  .counter-wrap {
+    padding: 24px 0 32px;
+  }
+
+  .counter {
+    font-size: 32px;
+    letter-spacing: 0.24px;
+  }
+
+  /* Video demo */
+  .stage {
+    padding: 32px 0 48px;
+  }
+
+  .stage-inner {
+    width: 95%;
+    max-width: none;
+    margin: 0 auto;
+  }
+
+  .replay-btn {
+    padding: 12px 20px;
+    font-size: 11.2px;
+  }
+
+  .replay-btn svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Waitlist form */
+  .checkout {
+    padding: 24px 0 64px;
+  }
+
+  .input-group {
+    flex-direction: column;
+    padding: 12px;
+    max-width: 90%;
+    gap: 12px;
+    border-radius: 16px;
+  }
+
+  .email-input {
+    font-size: 14.4px;
+    padding: 12px 16px;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .join-btn {
+    font-size: 14.4px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    width: 100%;
+  }
+
+  .thank-you-message p {
+    font-size: 14.4px;
+    padding: 0 16px;
+  }
+
+  /* Background particles - reduce for mobile performance */
+  .particle-waves {
+    opacity: 0.5;
+  }
+
+  .wave-layer {
+    animation-duration: 40s;
+  }
+
+  .wave-layer-1 {
+    animation-duration: 45s;
+  }
+
+  .wave-layer-2 {
+    animation-duration: 50s;
+  }
+
+  .wave-layer-3 {
+    animation-duration: 55s;
+  }
+
+  /* Container adjustments */
+  .container {
+    width: min(1000px, 95%);
+  }
+
+}
