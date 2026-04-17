@@ -39,10 +39,6 @@
       <h1 id="animated-headline">All your files in one place, searchable by meaning</h1>
     </section>
 
-    <div class="counter-wrap container" aria-label="signup counter">
-      <div id="signup-counter" class="counter">1400 signed up already</div>
-    </div>
-
     <section class="stage container" aria-label="Demo video">
       <div class="stage-inner">
         <iframe id="youtube-player" width="100%" height="100%"
@@ -79,31 +75,6 @@
   </footer>
 
   <script>
-
-    // Store current count
-    let currentCount = null;
-
-    // Show loading message
-    const counter = document.getElementById('signup-counter');
-    counter.textContent = 'Loading signup count...';
-
-    // Function to fetch and update signup count
-    function fetchSignupCount() {
-      fetch('https://script.google.com/macros/s/AKfycbwaKcezQRKC5qsA5jwd40tTXMtOJmVj6S1HDFAQQn-C5sHjbyE7UQBXQudKx88f7SM4DA/exec')
-        .then(response => response.json())
-        .then(data => {
-          const newCount = data.count + 1400; // Add 1400 to the real count
-          currentCount = newCount;
-          displayCount(currentCount, true); // Show glow when count updates
-        })
-        .catch(error => {
-          console.log('Could not fetch signup count:', error);
-          // Keep current count if API fails
-        });
-    }
-
-    // Fetch count immediately (but don't block page load)
-    fetchSignupCount();
 
     // waves parallax animation
     const waves = document.querySelectorAll('.wave-layer');
@@ -187,46 +158,6 @@
       console.log('Error loading YouTube API:', error);
     }
 
-    // Function to update counter display with animations
-    function displayCount(count, showGlow = false) {
-      const newText = `${count} signed up already`;
-      const counter = document.getElementById('signup-counter');
-      counter.innerHTML = '';
-
-      // Find the position of the last digit in the full text string
-      const countString = count.toString();
-      const lastDigitChar = countString[countString.length - 1];
-      const spaceIndex = newText.indexOf(' '); // Find where the number ends
-      const lastDigitIndex = spaceIndex - 1; // Last digit is just before the space
-
-      newText.split('').forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        span.style.opacity = '1';
-        span.style.position = 'relative';
-        span.style.display = 'inline'; // Ensure inline display
-        if (showGlow) {
-          span.style.animation = `letterGlow 2s ease-in-out ${0.5 + i * 0.05}s infinite`;
-        }
-
-        // Add blinking underline only under the last digit of the number
-        if (i === lastDigitIndex) {
-          const underline = document.createElement('span');
-          underline.textContent = '_';
-          underline.style.position = 'absolute';
-          underline.style.bottom = '-0.15em';
-          underline.style.left = '50%';
-          underline.style.transform = 'translateX(-50%)';
-          underline.style.fontSize = '0.7em';
-          underline.style.fontWeight = '900';
-          underline.style.animation = `blink 1.5s ease-in-out ${5 + i * 0.05}s infinite`;
-          span.appendChild(underline);
-        }
-
-        counter.appendChild(span);
-      });
-    }
-
     // Handle form submission
     document.getElementById('waitlist-form').addEventListener('submit', async function (e) {
       e.preventDefault(); // Prevent default form submission
@@ -254,10 +185,6 @@
         const data = await response.json();
 
         if (data.success) {
-          // Update counter with real count + 1400
-          currentCount = data.count + 1400;
-          displayCount(currentCount, false);
-
           // Hide form and show thank you message
           form.style.display = 'none';
           thankYouMessage.style.display = 'block';
