@@ -1,2 +1,2 @@
 # gnome
-Landing page with waitlist sign-up for Gnome (gnom3.com)
+Landing page with waitlist sign-up for Gnome (gnom3.vercel.app)
